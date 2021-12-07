@@ -16,20 +16,11 @@ const buttonNew = document.querySelector(".btn--new");
 const buttonRoll = document.querySelector(".btn--roll");
 const buttonHold = document.querySelector(".btn--hold");
 
+let scores,currentScore , activePlayer, playing;
 
 //#endregion
 
-//#region Scoring Conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add("hidden"); 
 
-const scores = [0,0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
-
-//#endregion
 
 const switchPlayer = function () 
 {  
@@ -40,6 +31,30 @@ const switchPlayer = function ()
     player1El.classList.toggle("player--active");
 }
 
+const init = function () 
+{
+
+    score0El.textContent = 0;
+    score1El.textContent = 0;
+
+    scores = [0,0];
+    currentScore = 0;
+    activePlayer = 0;
+    playing = true;
+
+    current0El.textContent = 0;
+    current1El.textContent = 0;
+
+    diceEl.classList.add("hidden"); 
+    player0El.classList.remove("player--winner");
+    player1El.classList.remove("player--winner");
+    player0El.classList.add("player--active");
+    player1El.classList.remove("player--active");
+
+    activePlayer = 0;
+};
+
+init();
 
 
 //#region Dice Rolling Functionality
@@ -80,7 +95,7 @@ buttonHold.addEventListener("click",function()
         scores[activePlayer] += currentScore;   
         document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
         // 2. Check if score is 100 
-        if(scores[activePlayer] >= 20)
+        if(scores[activePlayer] >= 100)
         {
             playing = false;
             diceEl.classList.add("hidden");
@@ -96,10 +111,7 @@ buttonHold.addEventListener("click",function()
 
 });
 
-buttonNew.addEventListener("click",function()
-{
-
-});
+buttonNew.addEventListener("click",init);
 
 
 
